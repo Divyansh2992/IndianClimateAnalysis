@@ -35,7 +35,7 @@ export default function IndiaMap({ onDistrictClick, onDistrictHover }) {
   }, []);
 
   useEffect(() => {
-    d3.json(`${import.meta.env.VITE_API_URL}/india.json`).then((topology) => {
+    d3.json('/india.json').then((topology) => {
       const india = feature(topology, topology.objects.districts);
       const width = 900;
       const height = 580;
