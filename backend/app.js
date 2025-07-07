@@ -5,8 +5,13 @@ const fs = require('fs');
 const path = require('path');
 const epwRoutes = require('./routes/epw');
 
-// Enable CORS for all origins
-app.use(cors());
+// Allow only your Netlify frontend
+const allowedOrigins = ['https://indianclimateanalysis.netlify.app'];
+
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true, // if you use cookies or auth headers
+}));
 app.use(express.json());
 app.use('/api/epw', epwRoutes);
 
