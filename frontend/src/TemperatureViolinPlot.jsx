@@ -13,7 +13,7 @@ export default function TemperatureViolinPlot({ district = 'Ajmer' }) {
   const [design, setDesign] = useState([null, null, null]);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/epw/temperature-monthwise/district/${encodeURIComponent(district)}`)
+    fetch(`${import.meta.env.VITE_API_URL}/api/epw/temperature-monthwise/district/${encodeURIComponent(district)}`)
       .then(res => res.json())
       .then(json => {
         setData(json);

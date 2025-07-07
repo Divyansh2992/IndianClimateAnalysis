@@ -28,14 +28,14 @@ export default function IndiaMap({ onDistrictClick, onDistrictHover }) {
 
   useEffect(() => {
     // Fetch climate type mapping
-    fetch('/api/epw/climate-types')
+    fetch(`${import.meta.env.VITE_API_URL}/api/epw/climate-types`)
       .then(res => res.json())
       .then(setClimateTypes)
       .catch(() => setClimateTypes({}));
   }, []);
 
   useEffect(() => {
-    d3.json('/india.json').then((topology) => {
+    d3.json(`${import.meta.env.VITE_API_URL}/india.json`).then((topology) => {
       const india = feature(topology, topology.objects.districts);
       const width = 900;
       const height = 580;

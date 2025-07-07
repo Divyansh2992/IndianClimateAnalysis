@@ -60,7 +60,7 @@ export default function BioclimaticChart({ district }) {
     setPrevSvg(svg); // Save current SVG before loading new one
     // setSvg(""); // Don't clear svg immediately
     const body = { ...(customParams || params), district };
-    const response = await fetch("http://localhost:3000/api/epw/psychrometry/save-svg", {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/epw/psychrometry/save-svg`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),

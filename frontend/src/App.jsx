@@ -60,7 +60,7 @@ function MainAppContent() {
   }, []);
 
   const handleDistrictClick = (district) => {
-    fetch(`/api/epw/summary/district/${encodeURIComponent(district)}`)
+    fetch(`${import.meta.env.VITE_API_URL}/api/epw/summary/district/${encodeURIComponent(district)}`)
       .then(async res => {
         if (!res.ok) {
           throw new Error('Not found');
@@ -82,7 +82,7 @@ function MainAppContent() {
     if (districtName && stateName) {
       const normDistrict = districtName.trim().toLowerCase();
       const normState = stateName.trim().toLowerCase();
-      fetch(`http://localhost:3000/api/epw/design-conditions/${encodeURIComponent(normDistrict)}/${encodeURIComponent(normState)}`)
+      fetch(`${import.meta.env.VITE_API_URL}/api/epw/design-conditions/${encodeURIComponent(normDistrict)}/${encodeURIComponent(normState)}`)
         .then(res => {
           if (!res.ok) {
             throw new Error(`HTTP error! status: ${res.status}`);

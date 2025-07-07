@@ -8,14 +8,15 @@ const FILE_FORMATS = [
 
 function getDownloadUrl(district, format) {
   if (!district) return '#';
+  const baseUrl = import.meta.env.VITE_API_URL;
   if (format === 'epw') {
-    return `/api/epw/download/district/${encodeURIComponent(district)}`;
+    return `${baseUrl}/api/epw/download/district/${encodeURIComponent(district)}`;
   }
   if (format === 'csv') {
-    return `/api/epw/download-csv/district/${encodeURIComponent(district)}`;
+    return `${baseUrl}/api/epw/download-csv/district/${encodeURIComponent(district)}`;
   }
   if (format === 'bin') {
-    return `/api/epw/download-bin/district/${encodeURIComponent(district)}`;
+    return `${baseUrl}/api/epw/download-bin/district/${encodeURIComponent(district)}`;
   }
   // Add endpoints for other formats as needed
   return '#';
@@ -93,4 +94,4 @@ const DownloadTab = ({ district }) => {
   );
 };
 
-export default DownloadTab; 
+export default DownloadTab;

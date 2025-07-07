@@ -99,7 +99,7 @@ export default function HourlyColormapPlot({ district = 'Jaipur-Sanganer' }) {
   const [selectedType, setSelectedType] = useState('dbt'); // New state for selected colormap type
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/epw/hourly-colormap/district/${encodeURIComponent(district)}`)
+    fetch(`${import.meta.env.VITE_API_URL}/api/epw/hourly-colormap/district/${encodeURIComponent(district)}`)
       .then(res => res.json())
       .then(json => setData(json)); // Store the entire JSON response (dbt_array, wbt_array, etc.)
   }, [district]);

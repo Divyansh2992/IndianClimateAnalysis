@@ -9,7 +9,7 @@ export default function GroundTemperatureLinePlot({ district = 'Ajmer' }) {
   const [location, setLocation] = useState(null);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/epw/ground-temp/district/${encodeURIComponent(district)}`)
+    fetch(`${import.meta.env.VITE_API_URL}/api/epw/ground-temp/district/${encodeURIComponent(district)}`)
       .then(res => res.json())
       .then(json => {
         setData(json.monthlyData);

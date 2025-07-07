@@ -8,7 +8,7 @@ export default function WindVelocityViolinPlot({ district = 'Ajmer' }) {
   const [stats, setStats] = useState({ avg: null, max: null });
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/epw/windv-monthwise/district/${encodeURIComponent(district)}`)
+    fetch(`${import.meta.env.VITE_API_URL}/api/epw/windv-monthwise/district/${encodeURIComponent(district)}`)
       .then(res => res.json())
       .then(json => {
         setData(json);

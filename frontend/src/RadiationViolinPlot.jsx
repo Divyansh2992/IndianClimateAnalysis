@@ -13,7 +13,7 @@ export default function RadiationViolinPlot({ district = 'Ajmer' }) {
   const [annualAvg, setAnnualAvg] = useState([null, null, null]);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/epw/radiation-monthwise/district/${encodeURIComponent(district)}`)
+    fetch(`${import.meta.env.VITE_API_URL}/api/epw/radiation-monthwise/district/${encodeURIComponent(district)}`)
       .then(res => res.json())
       .then(json => {
         setData(json);
