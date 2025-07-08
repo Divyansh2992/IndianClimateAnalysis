@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import SummaryTable from './SummaryTable';
-import IndiaMap from './IndiaMap';
+import ResponsiveIndiaMap from './ResponsiveIndiaMap';
 import TemperatureViolinPlot from './TemperatureViolinPlot';
 import RadiationViolinPlot from './RadiationViolinPlot';
 import WindVelocityViolinPlot from './WindVelocityViolinPlot';
@@ -150,7 +150,7 @@ function MainAppContent() {
         }}
       >
         <div style={{ flex: 1, marginRight: isMobile || isTablet ? 0 : 20, width: isMobile || isTablet ? '100vw' : '100%' }}>
-          <IndiaMap onDistrictClick={handleDistrictClick} onDistrictHover={isMobile ? undefined : handleDistrictHover} />
+          <ResponsiveIndiaMap onDistrictClick={handleDistrictClick} onDistrictHover={isMobile ? undefined : handleDistrictHover} />
           {/* Tooltip is not shown on mobile */}
           {!isMobile && (
             <div id="tooltip" style={{
