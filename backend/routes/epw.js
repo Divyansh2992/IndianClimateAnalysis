@@ -69,7 +69,7 @@ router.get('/design-conditions/:district/:state', getDesignConditions);
 router.get('/climate-types', getClimateTypes);
 
 // Route to save psychrometry SVG
-router.post('/psychrometry/save-svg', psychrometryController.savePsychrometrySVG);
+router.post('/psychrometry/save-svg', resolveEpwByDistrict, psychrometryController.savePsychrometrySVG);
 
 // Route to download EPW file by district name
 router.get('/download/district/:district', resolveEpwByDistrict, epwController.downloadEpwFile);
