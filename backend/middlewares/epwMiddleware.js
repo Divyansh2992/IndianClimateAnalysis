@@ -16,7 +16,7 @@ const csvFileIds=require('../file_mappings/csvFileIds.json');
 
 // Middleware to resolve district name to Google Drive BIN file URL
 function resolveBinByDistrict(req, res, next) {
-    const district = req.params.district;
+    const district = req.params.district || req.body.district;
     let fileId = binFileIds[district];
     if (!fileId) {
         fileId = Object.entries(binFileIds).find(([key]) => typeof key === 'string' && typeof district === 'string' && key.toLowerCase() === district.toLowerCase())?.[1];
@@ -36,7 +36,7 @@ function resolveBinByDistrict(req, res, next) {
 
 // Middleware to resolve district name to Google Drive EPW file URL
 function resolveEpwByDistrict(req, res, next) {
-    const district = req.params.district;
+    const district = req.params.district || req.body.district;
     let fileId, resolvedKey;
     fileId = epwFileIds[district];
     resolvedKey = district;
@@ -67,7 +67,7 @@ function resolveEpwByDistrict(req, res, next) {
 
 // Middleware to resolve district name to Google Drive CSV file URL
 function resolveCsvByDistrict(req, res, next) {
-    const district = req.params.district;
+    const district = req.params.district || req.body.district;
     let fileId, resolvedKey;
     fileId = csvFileIds[district];
     resolvedKey = district;
