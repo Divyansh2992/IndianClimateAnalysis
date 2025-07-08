@@ -19,11 +19,13 @@ function resolveBinByDistrict(req, res, next) {
     const district = req.params.district;
     let fileId = binFileIds[district];
     if (!fileId) {
-        fileId = Object.entries(binFileIds).find(([key]) => typeof key === 'string' && key.toLowerCase() === district.toLowerCase())?.[1];
+        fileId = Object.entries(binFileIds).find(([key]) => typeof key === 'string' && typeof district === 'string' && key.toLowerCase() === district.toLowerCase())?.[1];
     }
     if (!fileId) {
-        const normDistrict = district.replace(/\s+|_/g, '').toLowerCase();
-        fileId = Object.entries(binFileIds).find(([key]) => typeof key === 'string' && key.replace(/\s+|_/g, '').toLowerCase() === normDistrict)?.[1];
+        if (typeof district === 'string') {
+            const normDistrict = district.replace(/\s+|_/g, '').toLowerCase();
+            fileId = Object.entries(binFileIds).find(([key]) => typeof key === 'string' && key.replace(/\s+|_/g, '').toLowerCase() === normDistrict)?.[1];
+        }
     }
     if (!fileId) {
         return res.status(404).json({ error: 'No BIN file found for district: ' + district });
@@ -39,18 +41,20 @@ function resolveEpwByDistrict(req, res, next) {
     fileId = epwFileIds[district];
     resolvedKey = district;
     if (!fileId) {
-        const entry = Object.entries(epwFileIds).find(([key]) => typeof key === 'string' && key.toLowerCase() === district.toLowerCase());
+        const entry = Object.entries(epwFileIds).find(([key]) => typeof key === 'string' && typeof district === 'string' && key.toLowerCase() === district.toLowerCase());
         if (entry) {
             fileId = entry[1];
             resolvedKey = entry[0];
         }
     }
     if (!fileId) {
-        const normDistrict = district.replace(/\s+|_/g, '').toLowerCase();
-        const entry = Object.entries(epwFileIds).find(([key]) => typeof key === 'string' && key.replace(/\s+|_/g, '').toLowerCase() === normDistrict);
-        if (entry) {
-            fileId = entry[1];
-            resolvedKey = entry[0];
+        if (typeof district === 'string') {
+            const normDistrict = district.replace(/\s+|_/g, '').toLowerCase();
+            const entry = Object.entries(epwFileIds).find(([key]) => typeof key === 'string' && key.replace(/\s+|_/g, '').toLowerCase() === normDistrict);
+            if (entry) {
+                fileId = entry[1];
+                resolvedKey = entry[0];
+            }
         }
     }
     if (!fileId) {
@@ -68,18 +72,20 @@ function resolveCsvByDistrict(req, res, next) {
     fileId = csvFileIds[district];
     resolvedKey = district;
     if (!fileId) {
-        const entry = Object.entries(csvFileIds).find(([key]) => typeof key === 'string' && key.toLowerCase() === district.toLowerCase());
+        const entry = Object.entries(csvFileIds).find(([key]) => typeof key === 'string' && typeof district === 'string' && key.toLowerCase() === district.toLowerCase());
         if (entry) {
             fileId = entry[1];
             resolvedKey = entry[0];
         }
     }
     if (!fileId) {
-        const normDistrict = district.replace(/\s+|_/g, '').toLowerCase();
-        const entry = Object.entries(csvFileIds).find(([key]) => typeof key === 'string' && key.replace(/\s+|_/g, '').toLowerCase() === normDistrict);
-        if (entry) {
-            fileId = entry[1];
-            resolvedKey = entry[0];
+        if (typeof district === 'string') {
+            const normDistrict = district.replace(/\s+|_/g, '').toLowerCase();
+            const entry = Object.entries(csvFileIds).find(([key]) => typeof key === 'string' && key.replace(/\s+|_/g, '').toLowerCase() === normDistrict);
+            if (entry) {
+                fileId = entry[1];
+                resolvedKey = entry[0];
+            }
         }
     }
     if (!fileId) {
