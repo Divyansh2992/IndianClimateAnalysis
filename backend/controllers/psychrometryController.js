@@ -2,25 +2,28 @@ const { spawn } = require('child_process');
 const path = require('path');
 const fs = require('fs');
 const os = require('os');
+const axios = require('axios');
 
 // POST /api/epw/psychrometry/save-svg
-exports.savePsychrometrySVG = (req, res) => {
+exports.savePsychrometrySVG = async (req, res) => {
     const params = req.body;
-    // District name should be sent in params.district
     const district = params.district;
     if (!district) {
         return res.status(400).send('District is required');
     }
-    // Find the EPW file for the district (case-insensitive match)
-    const epwDir = path.join(__dirname, '../epw_files');
-    const files = fs.readdirSync(epwDir);
-    const epwFile = files.find(f => f.toLowerCase().includes(district.toLowerCase()) && f.toLowerCase().endsWith('.epw'));
-    if (!epwFile) {
+    // Use Google Drive URL from middleware
+    const epwDriveUrl = req.epwDriveUrl;
+    if (!epwDriveUrl) {
         return res.status(404).send('EPW file not found for district');
     }
-    const epwFilePath = path.join(epwDir, epwFile);
-    // Parse the EPW file to get dbt, rh, elevation
-    const epwData = fs.readFileSync(epwFilePath, 'utf8').split(/\r?\n/);
+    let epwDataRaw;
+    try {
+        const response = await axios.get(epwDriveUrl);
+        epwDataRaw = response.data;
+    } catch (err) {
+        return res.status(404).send('EPW file could not be downloaded');
+    }
+    const epwData = epwDataRaw.split(/\r?\n/);
     const header = epwData[0].split(',');
     const elevation = parseFloat(header[9]);
     const dbt = [], rh = [];

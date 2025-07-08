@@ -1,40 +1,65 @@
 const fs = require('fs');
 const path = require('path');
+require('dotenv').config();
 
-// Middleware to validate EPW filename and path
-function validateEpwFilename(req, res, next) {
-    const filename = req.params.filename;
-    const epwDir = path.join(__dirname, '../epw_files');
-    const filePath = path.join(epwDir, filename);
-    if (!filePath.startsWith(epwDir)) {
-        return res.status(400).json({ error: 'Invalid filename' });
+// Helper to create Google Drive direct download link from file ID
+function getDriveDownloadUrl(fileId) {
+    return `https://drive.google.com/uc?export=download&id=${fileId}`;
+}
+
+// Load BIN file mapping
+const binFileIds = require('../file_mappings/binFileIds.json');
+// Load EPW file mapping
+const epwFileIds = require('../file_mappings/epwFileIds.json');
+
+// Middleware to resolve district name to Google Drive BIN file URL
+function resolveBinByDistrict(req, res, next) {
+    const district = req.params.district;
+    // Try exact match, then case-insensitive, then normalized (replace spaces/underscores)
+    let fileId = binFileIds[district];
+    if (!fileId) {
+        // Try case-insensitive
+        fileId = Object.entries(binFileIds).find(([key]) => key.toLowerCase() === district.toLowerCase())?.[1];
     }
-    req.epwFilePath = filePath;
+    if (!fileId) {
+        // Try normalized
+        const normDistrict = district.replace(/\s+|_/g, '').toLowerCase();
+        fileId = Object.entries(binFileIds).find(([key]) => key.replace(/\s+|_/g, '').toLowerCase() === normDistrict)?.[1];
+    }
+    if (!fileId) {
+        return res.status(404).json({ error: 'No BIN file found for district: ' + district });
+    }
+    req.binDriveUrl = getDriveDownloadUrl(fileId);
     next();
 }
 
-
-// Mapping function: district name to EPW filename
-function getEpwFilenameFromDistrict(district) {
-    // List all files in epw_files directory
-    const epwDir = path.join(__dirname, '../epw_files');
-    const files = fs.readdirSync(epwDir);
-    // Try to find a file that includes the district name (case-insensitive, ignoring spaces)
-    const normalizedDistrict = district.replace(/\s+/g, '').toLowerCase();
-    const match = files.find(f => f.replace(/\s+/g, '').toLowerCase().includes(normalizedDistrict));
-    return match || null;
-}
-
-// Middleware to allow district name as filename
+// Middleware to resolve district name to Google Drive EPW file URL
 function resolveEpwByDistrict(req, res, next) {
     const district = req.params.district;
-    const filename = getEpwFilenameFromDistrict(district);
-    if (!filename) {
+    let fileId, resolvedKey;
+    fileId = epwFileIds[district];
+    resolvedKey = district;
+    if (!fileId) {
+        const entry = Object.entries(epwFileIds).find(([key]) => key.toLowerCase() === district.toLowerCase());
+        if (entry) {
+            fileId = entry[1];
+            resolvedKey = entry[0];
+        }
+    }
+    if (!fileId) {
+        const normDistrict = district.replace(/\s+|_/g, '').toLowerCase();
+        const entry = Object.entries(epwFileIds).find(([key]) => key.replace(/\s+|_/g, '').toLowerCase() === normDistrict);
+        if (entry) {
+            fileId = entry[1];
+            resolvedKey = entry[0];
+        }
+    }
+    if (!fileId) {
         return res.status(404).json({ error: 'No EPW file found for district: ' + district });
     }
-    req.epwFilePath = path.join(__dirname, '../epw_files', filename);
-    req.epwResolvedFilename = filename;
+    req.epwDriveUrl = getDriveDownloadUrl(fileId);
+    req.epwResolvedFilename = resolvedKey;
     next();
 }
 
-module.exports = { validateEpwFilename, resolveEpwByDistrict };
+module.exports = { resolveBinByDistrict, resolveEpwByDistrict };
