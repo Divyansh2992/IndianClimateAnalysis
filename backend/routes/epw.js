@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const path = require('path');
-const { validateEpwFilename, resolveEpwByDistrict } = require('../middlewares/epwMiddleware');
+const { validateEpwFilename, resolveEpwByDistrict, resolveCsvByDistrict } = require('../middlewares/epwMiddleware');
 const epwController = require('../controllers/epwController');
 const windController = require('../controllers/windController');
 const summaryController = require('../controllers/summaryController');
@@ -75,7 +75,7 @@ router.post('/psychrometry/save-svg', psychrometryController.savePsychrometrySVG
 router.get('/download/district/:district', resolveEpwByDistrict, epwController.downloadEpwFile);
 
 // Route to download CSV file by district name
-router.get('/download-csv/district/:district', resolveEpwByDistrict, epwController.downloadCsvFile);
+router.get('/download-csv/district/:district', resolveCsvByDistrict, epwController.downloadCsvFile);
 
 // Route to download BIN file by district name
 router.get('/download-bin/district/:district', resolveEpwByDistrict, epwController.downloadBinFile);

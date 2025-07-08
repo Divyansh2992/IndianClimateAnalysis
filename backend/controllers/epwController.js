@@ -1,15 +1,22 @@
 const fs = require('fs');
 const path = require('path');
 const fetch = require('node-fetch');
+const axios = require('axios');
 
 // GET /api/epw/:filename - Return raw EPW file content
-exports.getEpwFile = (req, res) => {
-    fs.readFile(req.epwFilePath, 'utf8', (err, data) => {
-        if (err) {
-            return res.status(404).json({ error: 'File not found' });
-        }
-        res.json({ filename: req.params.filename, data });
-    });
+exports.getEpwFile = async (req, res) => {
+    const epwDriveUrl = req.epwDriveUrl;
+    if (!epwDriveUrl) {
+        return res.status(404).json({ error: 'EPW file not found for district' });
+    }
+    let data;
+    try {
+        const response = await axios.get(epwDriveUrl);
+        data = response.data;
+    } catch (err) {
+        return res.status(404).json({ error: 'EPW file could not be downloaded' });
+    }
+    res.json({ filename: req.params.filename, data });
 };
 
 // Use the generated mapping files for file IDs
