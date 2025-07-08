@@ -17,16 +17,13 @@ const csvFileIds=require('../file_mappings/csvFileIds.json');
 // Middleware to resolve district name to Google Drive BIN file URL
 function resolveBinByDistrict(req, res, next) {
     const district = req.params.district;
-    // Try exact match, then case-insensitive, then normalized (replace spaces/underscores)
     let fileId = binFileIds[district];
     if (!fileId) {
-        // Try case-insensitive
-        fileId = Object.entries(binFileIds).find(([key]) => key.toLowerCase() === district.toLowerCase())?.[1];
+        fileId = Object.entries(binFileIds).find(([key]) => typeof key === 'string' && key.toLowerCase() === district.toLowerCase())?.[1];
     }
     if (!fileId) {
-        // Try normalized
         const normDistrict = district.replace(/\s+|_/g, '').toLowerCase();
-        fileId = Object.entries(binFileIds).find(([key]) => key.replace(/\s+|_/g, '').toLowerCase() === normDistrict)?.[1];
+        fileId = Object.entries(binFileIds).find(([key]) => typeof key === 'string' && key.replace(/\s+|_/g, '').toLowerCase() === normDistrict)?.[1];
     }
     if (!fileId) {
         return res.status(404).json({ error: 'No BIN file found for district: ' + district });
@@ -42,7 +39,7 @@ function resolveEpwByDistrict(req, res, next) {
     fileId = epwFileIds[district];
     resolvedKey = district;
     if (!fileId) {
-        const entry = Object.entries(epwFileIds).find(([key]) => key.toLowerCase() === district.toLowerCase());
+        const entry = Object.entries(epwFileIds).find(([key]) => typeof key === 'string' && key.toLowerCase() === district.toLowerCase());
         if (entry) {
             fileId = entry[1];
             resolvedKey = entry[0];
@@ -50,7 +47,7 @@ function resolveEpwByDistrict(req, res, next) {
     }
     if (!fileId) {
         const normDistrict = district.replace(/\s+|_/g, '').toLowerCase();
-        const entry = Object.entries(epwFileIds).find(([key]) => key.replace(/\s+|_/g, '').toLowerCase() === normDistrict);
+        const entry = Object.entries(epwFileIds).find(([key]) => typeof key === 'string' && key.replace(/\s+|_/g, '').toLowerCase() === normDistrict);
         if (entry) {
             fileId = entry[1];
             resolvedKey = entry[0];
@@ -71,7 +68,7 @@ function resolveCsvByDistrict(req, res, next) {
     fileId = csvFileIds[district];
     resolvedKey = district;
     if (!fileId) {
-        const entry = Object.entries(csvFileIds).find(([key]) => key.toLowerCase() === district.toLowerCase());
+        const entry = Object.entries(csvFileIds).find(([key]) => typeof key === 'string' && key.toLowerCase() === district.toLowerCase());
         if (entry) {
             fileId = entry[1];
             resolvedKey = entry[0];
@@ -79,7 +76,7 @@ function resolveCsvByDistrict(req, res, next) {
     }
     if (!fileId) {
         const normDistrict = district.replace(/\s+|_/g, '').toLowerCase();
-        const entry = Object.entries(csvFileIds).find(([key]) => key.replace(/\s+|_/g, '').toLowerCase() === normDistrict);
+        const entry = Object.entries(csvFileIds).find(([key]) => typeof key === 'string' && key.replace(/\s+|_/g, '').toLowerCase() === normDistrict);
         if (entry) {
             fileId = entry[1];
             resolvedKey = entry[0];
