@@ -133,7 +133,7 @@ function MainAppContent() {
         color: '#1a237e',
         textShadow: '0 2px 8px rgba(26,35,126,0.08)',
       }}>
-        Indian Weather Analysis
+        Weather Analysis of Indian Cities
       </div>
       <div
         className="main-flex-container"
