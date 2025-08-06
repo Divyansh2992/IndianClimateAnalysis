@@ -186,7 +186,12 @@ function MainAppContent() {
             {hoveredDistrict ? (
               designConditions ? (
                 <div>
-                  <h3 style={{ fontSize: 18, marginBottom: 10, textAlign: 'center' }}>{hoveredDistrict}{designSource ? ` (${designSource})` : ''}</h3>
+                  <div style={{ textAlign: 'center', marginBottom: 10 }}>
+                    <h3 style={{ fontSize: 18, marginBottom: 2 }}>{hoveredDistrict}</h3>
+                    {designSource && (
+                      <p style={{ fontSize: 12, color: '#666', margin: 0, font  Style: 'italic' }}>{designSource}</p>
+                    )}
+                  </div>
                   {/* CDD/HDD Section */}
                   {degreeDays && (degreeDays.CDD || degreeDays.HDD) && (
                     <div style={{ margin: '10px 0 18px 0', padding: '10px 0', borderTop: '1px solid #eee', borderBottom: '1px solid #eee', textAlign: 'center' }}>

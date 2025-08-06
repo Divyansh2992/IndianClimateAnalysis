@@ -35,28 +35,32 @@ export default function About() {
       email: "divyanshvijay92@gmail.com",
       role: "B. Tech. (Summer Internship, MNIT Jaipur)",
       institution: "SVNIT Surat",
-      avatar: "👨‍🎓"
+      image: "/src/assets/divyansh.jpg",
+      profileUrl: "https://www.linkedin.com/in/divyansh-vijay-17187b227"
     },
     {
       name: "Raj Gupta",
       email: "guptaa.raj07@gmail.com",
       role: "Research Scholar",
       institution: "MNIT Jaipur",
-      avatar: "👨‍🔬"
+      image: "/src/assets/RajSir.jpg",
+      profileUrl: "https://jouleforgelab.com/"
     },
     {
       name: "Jyotirmay Mathur",
       email: "jmathur.mech@mnit.ac.in",
       role: "Professor",
       institution: "MNIT Jaipur",
-      avatar: "👨‍🏫"
+      image: "/src/assets/JMSir.jpg",
+      profileUrl: "https://mnit.ac.in/dept_mech/profile?fid=Qqs="
     },
     {
       name: "Vishal Garg",
       email: "vishal.garg@plaksha.edu.in",
       role: "Professor",
       institution: "Plaksha University",
-      avatar: "👨‍🏫"
+      image: "/src/assets/VishalGargSir.jpg",
+      profileUrl: "https://plaksha.edu.in/faculty-details/dr-vishal-garg"
     }
   ];
 
@@ -213,8 +217,36 @@ export default function About() {
                 <div key={index} className="col-md-6 col-lg-3">
                   <div className="card h-100 border-0 shadow-sm hover-lift text-center">
                     <div className="card-body p-4">
-                      <div className="display-4 mb-3">{member.avatar}</div>
-                      <h5 className="card-title text-primary mb-2">{member.name}</h5>
+                      <div className="mb-3 d-flex justify-content-center">
+                        <img 
+                          src={member.image} 
+                          alt={`${member.name} profile`}
+                          className="rounded-circle"
+                          style={{
+                            width: '80px',
+                            height: '80px',
+                            objectFit: 'cover',
+                            border: '3px solid #f8f9fa',
+                            boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+                          }}
+                        />
+                      </div>
+                      <h5 className="card-title text-primary mb-2">
+                        {member.profileUrl ? (
+                          <a 
+                            href={member.profileUrl} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="text-decoration-none"
+                            title="View Profile"
+                          >
+                            {member.name}
+                            <i className="bi bi-box-arrow-up-right ms-1" style={{fontSize: '0.8em'}}></i>
+                          </a>
+                        ) : (
+                          member.name
+                        )}
+                      </h5>
                       <p className="text-muted small mb-2">
                         <i className="bi bi-envelope me-1"></i>
                         <a href={`mailto:${member.email}`} className="text-decoration-none">
