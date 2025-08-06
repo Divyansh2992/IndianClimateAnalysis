@@ -189,7 +189,7 @@ function MainAppContent() {
                   <div style={{ textAlign: 'center', marginBottom: 10 }}>
                     <h3 style={{ fontSize: 18, marginBottom: 2 }}>{hoveredDistrict}</h3>
                     {designSource && (
-                      <p style={{ fontSize: 12, color: '#666', margin: 0, font  Style: 'italic' }}>{designSource}</p>
+                      <p style={{ fontSize: 12, color: '#666', margin: 0, fontStyle: 'italic' }}>{designSource}</p>
                     )}
                   </div>
                   {/* CDD/HDD Section */}
