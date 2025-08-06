@@ -1,4 +1,8 @@
 import React, { useState } from 'react';
+import divyanshImage from './assets/divyansh.jpg';
+import rajSirImage from './assets/RajSir.jpg';
+import jmSirImage from './assets/JMSir.jpg';
+import vishalGargSirImage from './assets/VishalGargSir.jpg';
 
 export default function About() {
   const [activeTab, setActiveTab] = useState('overview');
@@ -35,7 +39,7 @@ export default function About() {
       email: "divyanshvijay92@gmail.com",
       role: "B. Tech. (Summer Internship, MNIT Jaipur)",
       institution: "SVNIT Surat",
-      image: "/src/assets/divyansh.jpg",
+      image: divyanshImage,
       profileUrl: "https://www.linkedin.com/in/divyansh-vijay-17187b227"
     },
     {
@@ -43,7 +47,7 @@ export default function About() {
       email: "guptaa.raj07@gmail.com",
       role: "Research Scholar",
       institution: "MNIT Jaipur",
-      image: "/src/assets/RajSir.jpg",
+      image: rajSirImage,
       profileUrl: "https://jouleforgelab.com/"
     },
     {
@@ -51,7 +55,7 @@ export default function About() {
       email: "jmathur.mech@mnit.ac.in",
       role: "Professor",
       institution: "MNIT Jaipur",
-      image: "/src/assets/JMSir.jpg",
+      image: jmSirImage,
       profileUrl: "https://mnit.ac.in/dept_mech/profile?fid=Qqs="
     },
     {
@@ -59,7 +63,7 @@ export default function About() {
       email: "vishal.garg@plaksha.edu.in",
       role: "Professor",
       institution: "Plaksha University",
-      image: "/src/assets/VishalGargSir.jpg",
+      image: vishalGargSirImage,
       profileUrl: "https://plaksha.edu.in/faculty-details/dr-vishal-garg"
     }
   ];
