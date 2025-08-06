@@ -165,6 +165,30 @@ function MainAppContent() {
               zIndex: 10
             }}></div>
           )}
+          
+          {/* View Publication Button in vacant space */}
+          {!(isMobile || isTablet) && (
+            <button
+              onClick={() => window.open('https://doi.org/10.1016/j.buildenv.2024.112512', '_blank')}
+              style={{
+                position: 'absolute',
+                left: '20px',
+                top: '93%',
+                transform: 'translateY(-50%)',
+                background: 'rgb(37, 13, 174)',
+                color: '#fff',
+                border: 'none',
+                padding: '10px 20px',
+                borderRadius: '4px',
+                cursor: 'pointer',
+                fontSize: '14px',
+                fontWeight: '500',
+                zIndex: 5,
+              }}
+            >
+              <b>Data Source</b>
+            </button>
+          )}
         </div>
         {/* Right side panel for Design Conditions - hidden on mobile/tablet */}
         {!(isMobile || isTablet) && (
